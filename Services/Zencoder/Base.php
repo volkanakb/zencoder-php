@@ -1,43 +1,33 @@
 <?php
-/**
- * Zencoder API client interface.
- *
- * @category Services
- * @package  Services_Zencoder
- * @author   Michael Christopher <m@zencoder.com>
- * @version  Release: 2.1.2
- * @license  http://creativecommons.org/licenses/MIT/MIT
- * @link     http://github.com/zencoder/zencoder-php
- */
 
-abstract class Services_Zencoder_Base
-    implements Services_Zencoder_HttpProxy
+namespace Zencoder\Services\Zencoder;
+
+abstract class Base implements HttpProxy
 {
+    protected $proxy;
 
-  protected $proxy;
+    public function __construct(HttpProxy $proxy)
+    {
+        $this->proxy = $proxy;
+    }
 
-  public function __construct(Services_Zencoder_HttpProxy $proxy)
-  {
-    $this->proxy = $proxy;
-  }
+    public function createData($path, $body = '', array $opts = [])
+    {
+        return $this->proxy->createData($path, $body, $opts);
+    }
 
-  public function createData($path, $body = "", array $opts = array())
-  {
-      return $this->proxy->createData($path, $body, $opts);
-  }
+    public function retrieveData($path, array $params = [], array $opts = [])
+    {
+        return $this->proxy->retrieveData($path, $params, $opts);
+    }
 
-  public function retrieveData($path, array $params = array(), array $opts = array())
-  {
-      return $this->proxy->retrieveData($path, $params, $opts);
-  }
+    public function updateData($path, $body = '', array $opts = [])
+    {
+        return $this->proxy->updateData($path, $body, $opts);
+    }
 
-  public function updateData($path, $body = "", array $opts = array())
-  {
-      return $this->proxy->updateData($path, $body, $opts);
-  }
-
-  public function deleteData($path, array $opts = array())
-  {
-      return $this->proxy->deleteData($path, $opts);
-  }
+    public function deleteData($path, array $opts = [])
+    {
+        return $this->proxy->deleteData($path, $opts);
+    }
 }

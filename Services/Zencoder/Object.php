@@ -10,8 +10,12 @@
  * @link     http://github.com/zencoder/zencoder-php
  */
 
-class Services_Zencoder_Object
+namespace Zencoder\Services\Zencoder;
+
+abstract class Object
 {
+    public $outputs;
+
     public function __construct($params)
     {
         $this->_update_attributes($params);
@@ -28,9 +32,9 @@ class Services_Zencoder_Object
     {
         foreach($outputs as $output_attrs) {
             if(!empty($output_attrs->label)) {
-                $this->outputs[$output_attrs->label] = new Services_Zencoder_Output($output_attrs);
+                $this->outputs[$output_attrs->label] = new Output($output_attrs);
             } else {
-                $this->outputs[] = new Services_Zencoder_Output($output_attrs);
+                $this->outputs[] = new Output($output_attrs);
             }
         }
     }

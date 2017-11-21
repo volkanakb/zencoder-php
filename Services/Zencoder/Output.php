@@ -10,6 +10,8 @@
  * @link     http://github.com/zencoder/zencoder-php
  */
 
-class Services_Zencoder_Output extends Services_Zencoder_Object
+namespace Zencoder\Services\Zencoder;
+
+class Output extends Object
 {
 }

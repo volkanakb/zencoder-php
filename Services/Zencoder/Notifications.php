@@ -10,20 +10,22 @@
  * @link     http://github.com/zencoder/zencoder-php
  */
 
-class Services_Zencoder_Notifications extends Services_Zencoder_Base
+namespace Zencoder\Services\Zencoder;
+
+class Notifications extends Base
 {
     /**
      * Parse and process incoming notifications from Zencoder
      *
-     * @return Services_Zencoder_Notification Parsed notification data
+     * @return Notification Parsed notification data
      */
     public function parseIncoming()
     {
         $incoming_data = json_decode(trim(file_get_contents('php://input')));
         if (!$incoming_data) {
-            throw new Services_Zencoder_Exception(
+            throw new \Exception(
                 'Unable to parse notification data: ' . file_get_contents('php://input'));
         }
-        return new Services_Zencoder_Notification($incoming_data);
+        return new Notification($incoming_data);
     }
 }

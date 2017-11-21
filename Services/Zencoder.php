@@ -10,15 +10,15 @@
  * @link     http://github.com/zencoder/zencoder-php
  * @access   private
  */
+namespace Zencoder\Services;
 
-function Services_Zencoder_autoload($className)
-{
-    if (substr($className, 0, 17) != 'Services_Zencoder') {return false;}
-    $file = str_replace('_', '/', $className);
-    $file = str_replace('Services/', '', $file);
-    return include dirname(__FILE__) . "/$file.php";
-}
-spl_autoload_register('Services_Zencoder_autoload');
+use Zencoder\Services\Zencoder\Accounts;
+use Zencoder\Services\Zencoder\Base;
+use Zencoder\Services\Zencoder\Http;
+use Zencoder\Services\Zencoder\Inputs;
+use Zencoder\Services\Zencoder\Jobs;
+use Zencoder\Services\Zencoder\Notifications;
+use Zencoder\Services\Zencoder\Outputs;
 
 /**
  * Zencoder API client interface.
@@ -31,14 +31,14 @@ spl_autoload_register('Services_Zencoder_autoload');
  * @link     http://github.com/zencoder/zencoder-php
  */
 
-class Services_Zencoder extends Services_Zencoder_Base
+class Zencoder extends Base
 {
     const USER_AGENT = 'ZencoderPHP v2.2.3';
 
     /**
     * Contains the HTTP communication class
     * 
-    * @var Services_Zencoder_Http
+    * @var Http
     */
     protected $http;
     /**
@@ -53,7 +53,7 @@ class Services_Zencoder extends Services_Zencoder_Base
     * 
     * Valid functions: create, details, integration, live
     *
-    * @var Services_Zencoder_Accounts
+    * @var Accounts
     */
     public $accounts;
     /**
@@ -61,7 +61,7 @@ class Services_Zencoder extends Services_Zencoder_Base
     *
     * Valid functions: details, progress
     *
-    * @var Services_Zencoder_Inputs
+    * @var Inputs
     */
     public $inputs;
     /**
@@ -69,7 +69,7 @@ class Services_Zencoder extends Services_Zencoder_Base
     *
     * Valid functions: create, index, details, progress, resubmit, cancel
     *
-    * @var Services_Zencoder_Jobs
+    * @var Jobs
     */
     public $jobs;
     /**
@@ -77,7 +77,7 @@ class Services_Zencoder extends Services_Zencoder_Base
     *
     * Valid functions: parseIncoming
     *
-    * @var Services_Zencoder_Notifications
+    * @var Notifications
     */
     public $notifications;
     /**
@@ -85,7 +85,7 @@ class Services_Zencoder extends Services_Zencoder_Base
     *
     * Valid functions: details, progress
     *
-    * @var Services_Zencoder_Outputs
+    * @var Outputs
     */
     public $outputs;
 
@@ -110,13 +110,13 @@ class Services_Zencoder extends Services_Zencoder_Base
     {
         // Check that library dependencies are met
         if (strnatcmp(phpversion(),'5.2.0') < 0) {
-            throw new Services_Zencoder_Exception('PHP version 5.2 or higher is required.');
+            throw new \Exception('PHP version 5.2 or higher is required.');
         }
         if (!function_exists('json_encode')) {
-            throw new Services_Zencoder_Exception('JSON support must be enabled.');
+            throw new \Exception('JSON support must be enabled.');
         }
         if (!function_exists('curl_init')) {
-            throw new Services_Zencoder_Exception('cURL extension must be enabled.');
+            throw new \Exception('cURL extension must be enabled.');
         }
 
         $this->version = $api_version;
@@ -129,12 +129,14 @@ class Services_Zencoder extends Services_Zencoder_Base
           $http_options["curlopts"][CURLOPT_CAINFO] = realpath($ca_file);
         }
 
-        $this->http = new Services_Zencoder_Http($api_host, $http_options);
-        $this->accounts = new Services_Zencoder_Accounts($this);
-        $this->inputs = new Services_Zencoder_Inputs($this);
-        $this->jobs = new Services_Zencoder_Jobs($this);
-        $this->notifications = new Services_Zencoder_Notifications($this);
-        $this->outputs = new Services_Zencoder_Outputs($this);
+        $this->http = new Http($api_host, $http_options);
+        $this->accounts = new Accounts($this);
+        $this->inputs = new Inputs($this);
+        $this->jobs = new Jobs($this);
+        $this->notifications = new Notifications($this);
+        $this->outputs = new Outputs($this);
+
+        parent::__construct($this);
     }
 
     /**
@@ -232,7 +234,7 @@ class Services_Zencoder extends Services_Zencoder_Base
             return TRUE;
         }
         if (empty($headers['Content-Type'])) {
-            throw new Services_Zencoder_Exception('Response header is missing Content-Type', $body);
+            throw new \Exception('Response header is missing Content-Type', $body);
         }
         switch ($headers['Content-Type']) {
             case 'application/json':
@@ -240,8 +242,8 @@ class Services_Zencoder extends Services_Zencoder_Base
                 return $this->_processJsonResponse($status, $headers, $body);
                 break;
         }
-        throw new Services_Zencoder_Exception(
-            'Unexpected content type: ' . $headers['Content-Type'], $body);
+        throw new \Exception(
+            'Unexpected content type: ' . $headers['Content-Type']);
     }
 
     private function _processJsonResponse($status, $headers, $body)
@@ -250,8 +252,8 @@ class Services_Zencoder extends Services_Zencoder_Base
         if ($status >= 200 && $status < 300) {
             return $decoded;
         }
-        throw new Services_Zencoder_Exception(
-            "Invalid HTTP status code: " . $status, $body
+        throw new \Exception(
+            "Invalid HTTP status code: " . $status
         );
     }
 }

@@ -10,7 +10,9 @@
  * @link     http://github.com/zencoder/zencoder-php
  */
 
-class Services_Zencoder_Outputs extends Services_Zencoder_Base
+namespace Zencoder\Services\Zencoder;
+
+class Outputs extends Base
 {
   /**
    * Return details of a specific output
@@ -18,10 +20,11 @@ class Services_Zencoder_Outputs extends Services_Zencoder_Base
    * @param integer $output_id  ID of the output file you want details for
    * @param array   $params    Optional overrides
    *
-   * @return Services_Zencoder_Output The object representation of the resource
+   * @return Output The object representation of the resource
    */
-  public function details($output_id, $params = array()) {
-    return new Services_Zencoder_Output($this->proxy->retrieveData("outputs/$output_id.json", array(), $params));
+  public function details($output_id, $params = array())
+  {
+      return new Output($this->proxy->retrieveData("outputs/$output_id.json", array(), $params));
   }
 
   /**
@@ -30,9 +33,10 @@ class Services_Zencoder_Outputs extends Services_Zencoder_Base
    * @param integer $output_id  ID of the output file you want progress for
    * @param array   $params    Optional overrides
    *
-   * @return Services_Zencoder_Progress The object representation of the resource
+   * @return Progress The object representation of the resource
    */
-  public function progress($output_id, $params = array()) {
-    return new Services_Zencoder_Progress($this->proxy->retrieveData("outputs/$output_id/progress.json", array(), $params));
+  public function progress($output_id, $params = array())
+  {
+      return new Progress($this->proxy->retrieveData("outputs/$output_id/progress.json", array(), $params));
   }
 }

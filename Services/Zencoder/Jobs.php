@@ -10,7 +10,9 @@
  * @link     http://github.com/zencoder/zencoder-php
  */
 
-class Services_Zencoder_Jobs extends Services_Zencoder_Base
+namespace Zencoder\Services\Zencoder;
+
+class Jobs extends Base
 {
   /**
    * Create a new job
@@ -18,7 +20,7 @@ class Services_Zencoder_Jobs extends Services_Zencoder_Base
    * @param array  $job     Array of attributes to use when creating the job
    * @param array  $params  Optional overrides
    *
-   * @return Services_Zencoder_Job The object representation of the resource
+   * @return Job The object representation of the resource
    */
   public function create($job = NULL, $params = array()) {
     if(is_string($job)) {
@@ -26,14 +28,14 @@ class Services_Zencoder_Jobs extends Services_Zencoder_Base
     } else if(is_array($job)) {
       $json = json_encode($job);
     } else {
-      throw new Services_Zencoder_Exception(
+      throw new \Exception(
         'Job parameters required to create job.');
     }
     $request = $this->proxy->createData("jobs", $json, $params);
     if ($request) {
-      return new Services_Zencoder_Job($request);
+      return new Job($request);
     }
-    throw new Services_Zencoder_Exception('Unable to create job');
+    throw new \Exception('Unable to create job');
   }
 
   /**
@@ -47,7 +49,7 @@ class Services_Zencoder_Jobs extends Services_Zencoder_Base
   public function index($args = array(), $params = array()) {
     $jobs = $this->proxy->retrieveData("jobs.json", $args, $params);
     $results = array();
-    foreach($jobs as $job) $results[] = new Services_Zencoder_Job($job);
+    foreach($jobs as $job) $results[] = new Job($job);
     return $results;
   }
 
@@ -57,10 +59,10 @@ class Services_Zencoder_Jobs extends Services_Zencoder_Base
    * @param integer $job_id   ID of the job you want details for
    * @param array   $params   Optional overrides
    *
-   * @return Services_Zencoder_Job The object representation of the resource
+   * @return Job The object representation of the resource
    */
   public function details($job_id, $params = array()) {
-    return new Services_Zencoder_Job($this->proxy->retrieveData("jobs/$job_id.json", array(), $params));
+    return new Job($this->proxy->retrieveData("jobs/$job_id.json", array(), $params));
   }
 
   /**
@@ -69,10 +71,10 @@ class Services_Zencoder_Jobs extends Services_Zencoder_Base
    * @param integer $job_id   ID of the job you want progress for
    * @param array   $params   Optional overrides
    *
-   * @return Services_Zencoder_Progress The object representation of the resource
+   * @return Progress The object representation of the resource
    */
   public function progress($job_id, $params = array()) {
-    return new Services_Zencoder_Progress($this->proxy->retrieveData("jobs/$job_id/progress.json", array(), $params));
+    return new Progress($this->proxy->retrieveData("jobs/$job_id/progress.json", array(), $params));
   }
 
   /**
