@@ -10,7 +10,7 @@
   },
   "autoload": {
     "psr-0" : {
-      "" : "Services/"
+      "Zencoder\\Services\\" : "Services/"
     }
   },
   "authors":[

@@ -31,7 +31,7 @@ use Zencoder\Services\Zencoder\Outputs;
  * @link     http://github.com/zencoder/zencoder-php
  */
 
-class Zencoder extends Base
+class ZencoderService extends Base
 {
     const USER_AGENT = 'ZencoderPHP v2.2.3';
 
