@@ -86,7 +86,7 @@ class Http extends Base
                 if (curl_setopt_array($curl, $opts)) {
                     if ($response = curl_exec($curl)) {
                         $parts = explode("\r\n\r\n", $response, 3);
-                        list($head, $body) = ($parts[0] === 'HTTP/1.1 100 Continue' || $parts[0] = 'HTTP/1.1 200 Connection established') ? [$parts[1], $parts[2]] : [$parts[0], $parts[1]];
+                        list($head, $body) = ($parts[0] === 'HTTP/1.1 100 Continue' || $parts[0] === 'HTTP/1.1 200 Connection established') ? [$parts[1], $parts[2]] : [$parts[0], $parts[1]];
                         $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
                         if ($this->debug) {
                             error_log(curl_getinfo($curl, CURLINFO_HEADER_OUT).$req_body);

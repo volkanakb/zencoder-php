@@ -14,13 +14,7 @@ namespace Zencoder\Services\Zencoder;
 
 class Progress extends Object
 {
-    public function __construct($params)
-    {
-        parent::__construct([]);
-        $this->_updateAttributes($params);
-    }
-
-    private function _updateAttributes($attributes = array())
+    protected function _update_attributes($attributes = array())
     {
         foreach ($attributes as $attr_name => $attr_value) {
             if ($attr_name == "outputs" && is_array($attr_value)) {

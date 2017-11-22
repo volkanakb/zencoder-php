@@ -21,7 +21,7 @@ abstract class Object
         $this->_update_attributes($params);
     }
 
-    private function _update_attributes($attributes = array())
+    protected function _update_attributes($attributes = array())
     {
         foreach($attributes as $attr_name => $attr_value) {
             if(empty($this->$attr_name)) $this->$attr_name = $attr_value;

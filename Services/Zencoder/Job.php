@@ -56,11 +56,11 @@ class Job extends Object
      */
     public function __construct($params)
     {
-        parent::__construct([]);
         $this->raw_response = $params;
+        parent::__construct($params);
     }
 
-    private function _update_attributes($attributes = [])
+    protected function _update_attributes($attributes = [])
     {
         foreach ($attributes as $attr_name => $attr_value) {
             if (($attr_name === 'output_media_files' || $attr_name === 'outputs') && is_array($attr_value)) {
