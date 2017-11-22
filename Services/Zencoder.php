@@ -98,6 +98,7 @@ class Zencoder extends Base
     * @param bool                 $debug        Enable debug mode
     * @param string               $ca_path      Path to a directory that holds multiple CA certificates
     * @param string               $ca_file      Path to a file holding one or more certificates to verify the peer with
+    * @param array                $curlOpts     Additional Curl Options
     */
     public function __construct(
         $api_key = NULL,
@@ -105,7 +106,8 @@ class Zencoder extends Base
         $api_host = 'https://app.zencoder.com',
         $debug = false,
         $ca_path = NULL,
-        $ca_file = NULL
+        $ca_file = NULL,
+        $curlOpts = []
     )
     {
         // Check that library dependencies are met
@@ -121,7 +123,7 @@ class Zencoder extends Base
 
         $this->version = $api_version;
 
-        $http_options = array("api_key" => $api_key, "debug" => $debug, "curlopts" => array(CURLOPT_USERAGENT => self::USER_AGENT));
+        $http_options = array("api_key" => $api_key, "debug" => $debug, "curlopts" => array_merge(array(CURLOPT_USERAGENT => self::USER_AGENT), $curlOpts));
         if (isset($ca_path)) {
           $http_options["curlopts"][CURLOPT_CAPATH] = realpath($ca_path);
         }
