@@ -9,7 +9,7 @@
     "php": ">=5.2.0"
   },
   "autoload": {
-    "psr-0" : {
+    "psr-4" : {
       "Zencoder\\Services\\" : "Services/"
     }
   },
