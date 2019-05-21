@@ -12,6 +12,6 @@
 
 namespace Zencoder\Services\Zencoder;
 
-class Output extends Object
+class Output extends ZenObject
 {
 }

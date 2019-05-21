@@ -12,7 +12,7 @@
 
 namespace Zencoder\Services\Zencoder;
 
-class Notification extends Object
+class Notification extends ZenObject
 {
     /**
     * The job that the notification references

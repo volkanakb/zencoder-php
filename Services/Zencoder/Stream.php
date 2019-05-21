@@ -12,6 +12,6 @@
 
 namespace Zencoder\Services\Zencoder;
 
-class Stream extends Object
+class Stream extends ZenObject
 {
 }

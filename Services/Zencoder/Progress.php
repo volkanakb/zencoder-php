@@ -12,7 +12,7 @@
 
 namespace Zencoder\Services\Zencoder;
 
-class Progress extends Object
+class Progress extends ZenObject
 {
     protected function _update_attributes($attributes = array())
     {

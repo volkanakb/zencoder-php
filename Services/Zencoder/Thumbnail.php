@@ -12,6 +12,6 @@
 
 namespace Zencoder\Services\Zencoder;
 
-class Thumbnail extends Object
+class Thumbnail extends ZenObject
 {
 }

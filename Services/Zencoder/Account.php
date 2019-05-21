@@ -12,6 +12,6 @@
 
 namespace Zencoder\Services\Zencoder;
 
-class Account extends Object
+class Account extends ZenObject
 {
 }

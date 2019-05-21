@@ -12,7 +12,7 @@
 
 namespace Zencoder\Services\Zencoder;
 
-abstract class Object
+abstract class ZenObject
 {
     public $outputs;
 

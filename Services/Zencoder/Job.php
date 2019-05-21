@@ -13,7 +13,7 @@
 
 namespace Zencoder\Services\Zencoder;
 
-class Job extends Object
+class Job extends ZenObject
 {
     /**
      * Array of the outputs on the job.

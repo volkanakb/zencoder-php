@@ -12,6 +12,6 @@
 
 namespace Zencoder\Services\Zencoder;
 
-class Input extends Object
+class Input extends ZenObject
 {
 }
