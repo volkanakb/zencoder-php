@@ -235,17 +235,17 @@ class ZencoderService extends Base
         if ( $status == 204 || (($status == 200 || $status == 201) && trim($body) == "")) {
             return TRUE;
         }
-        if (empty($headers['Content-Type'])) {
+        if (empty($headers['content-type'])) {
             throw new \Exception('Response header is missing Content-Type', $body);
         }
-        switch ($headers['Content-Type']) {
+        switch ($headers['content-type']) {
             case 'application/json':
             case 'application/json; charset=utf-8':
                 return $this->_processJsonResponse($status, $headers, $body);
                 break;
         }
         throw new \Exception(
-            'Unexpected content type: ' . $headers['Content-Type']);
+            'Unexpected content type: ' . $headers['content-type']);
     }
 
     private function _processJsonResponse($status, $headers, $body)
