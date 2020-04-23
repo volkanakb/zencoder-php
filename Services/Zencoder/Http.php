@@ -98,7 +98,8 @@ class Http extends Base
 
                         foreach ($header_lines as $line) {
                             list($key, $value) = explode(':', $line, 2);
-                            $headers[$key] = trim($value);
+                            // Ensure headers are lowercase per https://tools.ietf.org/html/rfc2616#section-4.2
+                            $headers[strtolower($key)] = trim($value);
                         }
 
                         curl_close($curl);
